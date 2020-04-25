@@ -15,9 +15,9 @@ heartbeat.config.monitors:
   # Directory + glob pattern to search for configuration files
   path: ${path.config}/monitors.d/*.yml
   # If enabled, heartbeat will periodically check the config.monitors path for changes
-  reload.enabled: false
+  reload.enabled: true
   # How often to check for changes
-  reload.period: 5s
+  reload.period: 1s
 
 # Configure monitors inline
 heartbeat.monitors:
@@ -27,9 +27,9 @@ heartbeat.monitors:
   # Human readable display name for this service in Uptime UI and elsewhere
   name: My Monitor
   # List or urls to query
-  urls: ["http://localhost:9200"]
+  urls: ["http://localhost:9200/?query="]
   # Configure task schedule
-  schedule: '@every 10s'
+  schedule: '@every 1s'
   # Total test connection and data exchange timeout
   #timeout: 16s
 

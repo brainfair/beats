@@ -41,6 +41,7 @@ require (
 	github.com/coreos/bbolt v1.3.1-coreos.6.0.20180318001526-af9db2027c98
 	github.com/coreos/go-systemd/v22 v22.0.0
 	github.com/coreos/pkg v0.0.0-20180108230652-97fdf19511ea
+	github.com/davecgh/go-spew v1.1.1
 	github.com/davecgh/go-xdr v0.0.0-20161123171359-e6a2ba005892 // indirect
 	github.com/denisenkom/go-mssqldb v0.0.0-20181014144952-4e0d7dc8888f
 	github.com/devigned/tab v0.1.2-0.20190607222403-0c15cf42f9a2 // indirect

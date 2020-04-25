@@ -20,6 +20,7 @@ package http
 import (
 	"bytes"
 	"context"
+	//"crypto/rand"
 	"fmt"
 	"io/ioutil"
 	"net"
@@ -39,6 +40,7 @@ import (
 	"github.com/elastic/beats/v7/libbeat/common"
 	"github.com/elastic/beats/v7/libbeat/common/transport/tlscommon"
 	"github.com/elastic/beats/v7/libbeat/common/useragent"
+	//"github.com/davecgh/go-spew/spew"
 )
 
 var userAgent = useragent.UserAgent("Heartbeat")
@@ -274,9 +276,27 @@ func attachRequestBody(ctx *context.Context, req *http.Request, body []byte) *ht
 	return req
 }
 
+//mutate request url to add timestamp
+func mutateReq( req *http.Request) *http.Request {
+	rs := strconv.FormatInt(time.Now().UTC().UnixNano(), 10)
+	newurl := req.URL.String() + rs
+	proxyReq, err := http.NewRequest(req.Method, newurl, req.Body)
+	if err != nil {
+		return proxyReq
+	}
+	return proxyReq
+}
+
 // execute the request. Note that this does not close the resp body, which should be done by caller
 func execRequest(client *http.Client, req *http.Request) (start time.Time, resp *http.Response, errReason reason.Reason) {
 	start = time.Now()
+	
+	//add timestamp to url if last symbol in url equal =
+	lastsymbol := req.URL.String()[len(req.URL.String())-1:]
+	if lastsymbol == "=" {
+		req = mutateReq(req)
+	}
+	
 	resp, err := client.Do(req)
 
 	if err != nil {
